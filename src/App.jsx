@@ -2,6 +2,7 @@ import { useState } from "react";
 import GooglePayButton from "@google-pay/button-react";
 
 export default function App() {
+
   const paymentRequest = {
     apiVersion: 2,
     apiVersionMinor: 0,
