@@ -53,3 +53,4 @@ jobs:
           VITE_APP_PUBLIC_KEY: ${{ secrets.VITE_APP_PUBLIC_KEY }}
           VITE_APP_MERCHANT_ID: ${{ secrets.VITE_APP_MERCHANT_ID }}
           VITE_APP_MERCHANT_NAME: ${{ secrets.VITE_APP_MERCHANT_NAME }}
+          VITE_APP_STRIPE_KEY: ${{ secrets.VITE_APP_STRIPE_KEY }}

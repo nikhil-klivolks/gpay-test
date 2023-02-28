@@ -14,11 +14,17 @@ export default function App() {
           allowedCardNetworks: ["MASTERCARD", "VISA"],
         },
         tokenizationSpecification: {
-          type: "DIRECT",
+          type: 'PAYMENT_GATEWAY',
           parameters: {
-            protocolVersion: "ECv2",
-            publicKey: import.meta.env.VITE_APP_PUBLIC_KEY,
-          },
+            "gateway": "stripe",
+            "stripe:version": "2022-11-15",
+            "stripe:publishableKey": import.meta.VITE_APP_STRIPE_KEY
+          }
+          // type: "DIRECT",
+          // parameters: {
+          //   protocolVersion: "ECv2",
+          //   publicKey: import.meta.env.VITE_APP_PUBLIC_KEY,
+          // },
         },
       },
     ],
