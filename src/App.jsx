@@ -3,13 +3,13 @@ import GooglePayButton from "@google-pay/button-react";
 
 export default function App() {
 
-  const [isReadyToPay, setIsReadyToPay] = useState(false);
+  const [isReadyToPay, setIsReadyToPay] = useState(true);
 
   const paymentRequest = {
     apiVersion: 2,
     apiVersionMinor: 0,
     allowedPaymentMethods: [
-      // {
+      {
       //   type: "CARD",
       //   parameters: {
       //     allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
@@ -29,18 +29,37 @@ export default function App() {
       //     // },
       //   },
       // },
-      {
+      // {
         type: "UPI",
         parameters: {
-          allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-          allowedUPIApps: ["paytm", "googlepay"],
+          // allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+          // allowedUPIApps: ["paytm", "googlepay"],
           pa: 'nikhildanand@okhdfcbank'
         },
         tokenizationSpecification: {
-          type: "UPI_TOKEN",
-        },
+          type: 'PAYMENT_GATEWAY',
+          parameters: {
+            "gateway": "stripe",
+            "stripe:version": "2022-11-15",
+            "stripe:publishableKey": import.meta.VITE_APP_STRIPE_KEY
+          }
+        }
       },
+      // "UPI"
     ],
+    // UPIParameters: {
+    //   pa: 'nikhildanand@okhdfcbank',
+    //   pn: 'Nikhil D Anand',
+    //   // tr: '<your-transaction-reference-id>',
+    //   // tn: 'Hi',
+    // },
+    paymentMethodTokenizationParameters: {
+      parameters: {
+        "gateway": "stripe",
+        "stripe:version": "2022-11-15",
+        "stripe:publishableKey": import.meta.VITE_APP_STRIPE_KEY
+      }
+    },
     merchantInfo: {
       merchantId: import.meta.env.VITE_APP_MERCHANT_ID,
       merchantName: import.meta.env.VITE_APP_MERCHANT_NAME,
@@ -71,7 +90,8 @@ export default function App() {
   // });
 
   const onReadyToPayChange = result => {
-    setIsReadyToPay(result.paymentMethodPresent && result.paymentMethodTypes.includes('UPI'));
+    console.log({ result })
+    // setIsReadyToPay(result.paymentMethodPresent && result.paymentMethodTypes.includes('UPI'));
   }
 
 
@@ -81,7 +101,7 @@ export default function App() {
         <div>
       {isReadyToPay ? (
         <GooglePayButton
-          environment="TEST"
+          environment="PRODUCTION"
           buttonType="plain"
           buttonSizeMode="fill"
           paymentRequest={paymentRequest}
@@ -98,7 +118,7 @@ export default function App() {
           }}
         />
       ) : (
-        <div>UPI payments are not supported on this device or location.</div>
+        <div>UPI payments are not supported on this device or location. Made by Nikhil</div>
       )}
     </div>
       </div>
